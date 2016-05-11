@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 public static class Utilities{
 
 	public static IEnumerable AnimatePotentialMatches(IEnumerable<GameObject> potentialMatches)
@@ -36,7 +35,7 @@ public static class Utilities{
 
     public static IEnumerable<GameObject> GetPotentialMatches(ShapeArray shapes)
     {
-        List<List<List<GameObject>>> matches = new List<List<List<GameObject>>>();
+       List<List<GameObject>> matches = new List<List<GameObject>>();
         for (int row =0; row<Constants.Rows;  row++)
         {
             for(int col =0;  col < Constants.Columns; col++)
@@ -56,15 +55,13 @@ public static class Utilities{
 
                 if(matches.Count> 2)
                 {
-                    List<List<GameObject>> list = matches[UnityEngine.Random.Range(0, matches.Count)];
-                    return list[UnityEngine.Random.Range(0, list.Count)];
+                    return matches[UnityEngine.Random.Range(0, matches.Count)];
                 }
             }
 
             if(row == Constants.Rows/2 && matches.Count>0 && matches.Count < 3)
             {
-                List<List<GameObject>> list = matches[UnityEngine.Random.Range(0, matches.Count)];
-                return list[UnityEngine.Random.Range(0, list.Count)];
+                return matches[UnityEngine.Random.Range(0,matches.Count)];
             }
         }
 
@@ -79,7 +76,7 @@ public static class Utilities{
 
 
 
-    public static List<List<GameObject>> CheckPotenialHorizontial1(int row, int col, ShapeArray arr)
+    public static List<GameObject> CheckPotenialHorizontial1(int row, int col, ShapeArray arr)
     {
         List<List<GameObject>> matches = new List<List<GameObject>>();
 
@@ -90,32 +87,30 @@ public static class Utilities{
                 if(row >=1 && row <= Constants.Rows - 2 && col >=1 )
                 {
                     if (arr[row - 1,col - 1].GetComponent<Shape>().IsSameType(arr[row,col].GetComponent<Shape>())){
-                        List<GameObject> item = new List<GameObject>()
+                       return  new List<GameObject>()
                         {
                              arr[row-1,col-1],
                              arr[row,col],
                              arr[row,col + 1],
                         };
-                        matches.Add(item);
                     }
 
                     if(arr[row + 1,col - 1].GetComponent<Shape>().IsSameType(arr[row,col].GetComponent<Shape>()))
                     {
-                        List<GameObject> item = new List<GameObject>()
-                        {
+                        return new List<GameObject>()
+                         {
                              arr[row+1,col-1],
                              arr[row,col],
                              arr[row,col + 1],
-                        };
-                        matches.Add(item);
+                         };
                     }
                 }
             }
         }
-        return matches.Count>0? matches :null ;
+        return null;
     }
 
-    public static List<List<GameObject>> CheckPotenialHorizontial2(int row, int col, ShapeArray arr)
+    public static List<GameObject> CheckPotenialHorizontial2(int row, int col, ShapeArray arr)
     {
         List<List<GameObject>> matches = new List<List<GameObject>>();
         if(col < Constants.Columns -2 )
@@ -125,45 +120,42 @@ public static class Utilities{
                 {
                     if(arr[row-1, col+2].GetComponent<Shape>().IsSameType(arr[row, col + 1].GetComponent<Shape>()))
                     {
-                        List<GameObject> item = new List<GameObject>()
-                        {
+                        return  new List<GameObject>()
+                         {
                             arr[row,col],
                             arr[row,col+1],
                             arr[row-1,col+2]
-                        };
-                        matches.Add(item);
+                         };
                     }
 
                     if (arr[row + 1, col + 2].GetComponent<Shape>().IsSameType(arr[row, col + 1].GetComponent<Shape>()))
                     {
-                        List<GameObject> item = new List<GameObject>()
-                        {
+                        return new List<GameObject>()
+                         {
                              arr[row,col],
                             arr[row,col+1],
                             arr[row+1,col+2]
-                        };
-                        matches.Add(item);
+                         };
                     }
                 }
             }
         }
-        return matches.Count > 0? matches :null;
+        return null;
     }
 
-    public static List<List<GameObject>> CheckPotenialHorizontial3(int row, int col, ShapeArray arr)
+    public static List<GameObject> CheckPotenialHorizontial3(int row, int col, ShapeArray arr)
     {
         List<List<GameObject>> matches = new List<List<GameObject>>();
         if(col < Constants.Columns - 3)
         {
             if (arr[row, col].GetComponent<Shape>().IsSameType(arr[row, col + 1].GetComponent<Shape>()) && arr[row, col + 1].GetComponent<Shape>().IsSameType(arr[row, col + 3].GetComponent<Shape>()))
             {
-                List<GameObject> item = new List<GameObject>()
-            {
-                arr[row,col],
-                arr[row,col+1],
-                arr[row,col+3]
-            };
-                matches.Add(item);
+                return new List<GameObject>()
+                {
+                    arr[row,col],
+                    arr[row,col+1],
+                    arr[row,col+3]
+                };
             }
         }
         
@@ -171,21 +163,19 @@ public static class Utilities{
         {
             if (arr[row, col].GetComponent<Shape>().IsSameType(arr[row, col+1].GetComponent<Shape>()) && arr[row, col].GetComponent<Shape>().IsSameType(arr[row, col -2].GetComponent<Shape>()))
             {
-                List<GameObject> item = new List<GameObject>()
-            {
-                arr[row,col],
-                arr[row,col+1],
-                arr[row,col-2]
-            };
-                matches.Add(item);
+                return new List<GameObject>()
+                {
+                    arr[row,col],
+                    arr[row,col+1],
+                    arr[row,col-2]
+                };
             }
         }
-        return matches.Count > 0 ? matches : null;
+        return null;
     }
 
-    public static List<List<GameObject>> CheckPotentialVertical1(int row, int col, ShapeArray arr)
+    public static List<GameObject> CheckPotentialVertical1(int row, int col, ShapeArray arr)
     {
-        List<List<GameObject>> matches = new List<List<GameObject>>();
         if(row < Constants.Rows - 2)
         {
             if (arr[row, col].GetComponent<Shape>().IsSameType(arr[row + 1, col].GetComponent<Shape>()))
@@ -193,33 +183,30 @@ public static class Utilities{
                 if(col >0 && col < Constants.Columns - 1)
                 {
                     if(arr[row + 1, col].GetComponent<Shape>().IsSameType(arr[row + 2, col + 1].GetComponent<Shape>())){
-                        List<GameObject> item = new List<GameObject>()
-                        {
-                            arr[row,col],
-                            arr[row+1,col],
-                            arr[row+2,col+1]
-                        };
-                        matches.Add(item);
+                        return  new List<GameObject>()
+                            {
+                                arr[row,col],
+                                arr[row+1,col],
+                                arr[row+2,col+1]
+                            };
                     }
 
                     if (arr[row + 1, col].GetComponent<Shape>().IsSameType(arr[row + 2, col - 1].GetComponent<Shape>())){
-                        List<GameObject> item = new List<GameObject>()
-                        {
-                            arr[row,col],
-                            arr[row+1,col],
-                            arr[row+2,col-1]
-                        };
-                        matches.Add(item);
+                        return  new List<GameObject>()
+                            {
+                                arr[row,col],
+                                arr[row+1,col],
+                                arr[row+2,col-1]
+                            };
                     }
                 }
             }
         }
-        return matches.Count > 0 ? matches : null;
+        return null;
     }
 
-    public static List<List<GameObject>> CheckPotentialVertical2(int row, int col, ShapeArray arr)
+    public static List<GameObject> CheckPotentialVertical2(int row, int col, ShapeArray arr)
     {
-        List<List<GameObject>> matches = new List<List<GameObject>>();
         if(row < Constants.Rows - 1)
         {
             if (arr[row, col].GetComponent<Shape>().IsSameType(arr[row + 1, col].GetComponent<Shape>()))
@@ -228,46 +215,43 @@ public static class Utilities{
                 {
                     if (arr[row + 1, col].GetComponent<Shape>().IsSameType(arr[row - 1, col - 1].GetComponent<Shape>()))
                     {
-                        List<GameObject> item = new List<GameObject>()
-                    {
-                        arr[row,col],
-                        arr[row+1,col],
-                        arr[row-1,col-1]
-                    };
-                        matches.Add(item);
+                       return new List<GameObject>()
+                        {
+                            arr[row,col],
+                            arr[row+1,col],
+                            arr[row-1,col-1]
+                        };
                     }
 
                     if (arr[row + 1, col].GetComponent<Shape>().IsSameType(arr[row - 1, col + 1].GetComponent<Shape>()))
                     {
-                        List<GameObject> item = new List<GameObject>()
-                    {
-                        arr[row,col],
-                        arr[row+1,col],
-                        arr[row-1,col+1]
-                    };
-                        matches.Add(item);
+                        return new List<GameObject>()
+                        {
+                            arr[row,col],
+                            arr[row+1,col],
+                            arr[row-1,col+1]
+                        };
                     }
                 }
                
             }
         }
-        return matches.Count > 0 ? matches : null;
+         return null;
     }
 
-    public static List<List<GameObject>> CheckPotentialVertical3(int row, int col, ShapeArray arr)
+    public static List<GameObject> CheckPotentialVertical3(int row, int col, ShapeArray arr)
     {
         List<List<GameObject>> matches = new List<List<GameObject>>();
         if (row < Constants.Rows - 3)
         {
             if (arr[row, col].GetComponent<Shape>().IsSameType(arr[row +1, col].GetComponent<Shape>()) && arr[row+1, col].GetComponent<Shape>().IsSameType(arr[row +3, col].GetComponent<Shape>()))
             {
-                List<GameObject> item = new List<GameObject>()
-            {
-                arr[row,col],
-                arr[row+1,col],
-                arr[row+3,col]
-            };
-                matches.Add(item);
+               return new List<GameObject>()
+                {
+                    arr[row,col],
+                    arr[row+1,col],
+                    arr[row+3,col]
+                };
             }
         }
 
@@ -275,15 +259,14 @@ public static class Utilities{
         {
             if (arr[row, col].GetComponent<Shape>().IsSameType(arr[row+1, col].GetComponent<Shape>()) && arr[row, col].GetComponent<Shape>().IsSameType(arr[row -2, col].GetComponent<Shape>()))
             {
-                List<GameObject> item = new List<GameObject>()
-            {
-                arr[row,col],
-                arr[row +1,col],
-                arr[row -2,col]
-            };
-                matches.Add(item);
+               return  new List<GameObject>()
+                {
+                    arr[row,col],
+                    arr[row +1,col],
+                    arr[row -2,col]
+                };
             }
         }
-        return matches.Count > 0 ? matches : null;
+        return null;
     }
 }
